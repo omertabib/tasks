@@ -22,6 +22,20 @@ class TasksController < ApplicationController
        
     end
     
+    def edit
+        @task = Task.find(params[:id])
+    end
+    
+    def update
+        @task = Task.find(params[:id])
+        if @task.update(task_params)
+            flash[:notice] = "מטלה נערכה בהצלחה!"
+            redirect_to task_path(@task)
+        else
+            render 'edit'
+        end
+    end
+    
     private
     def task_params
         params.require(:task).permit(:name, :description)
